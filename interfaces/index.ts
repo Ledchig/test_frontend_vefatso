@@ -1,4 +1,4 @@
-export interface iArticle {
+export interface IArticle {
     by: string,
     descendants: number,
     id: number,
@@ -10,3 +10,7 @@ export interface iArticle {
     type: string,
     url: string
   };
+
+export interface IDynamicArticleParams {
+  params: { id: string }
+};
