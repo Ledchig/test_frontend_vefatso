@@ -1,4 +1,5 @@
 import ArticlesList from "@/components/articlesList";
+import ButtonMoreArticles from "@/components/buttonMoreArticles";
 
 export const revalidate = 50;
 
@@ -23,9 +24,9 @@ const Home = async () => {
   console.log(articles[0]);
 
   return (
-    <main className="flex min-h-screen items-center flex-col justify-between p-24">
+    <main className="flex min-h-screen items-center flex-col justify-between p-6 sm:px-24 sm:py-12">
       <div>
-        <h1 className="text-6xl">
+        <h1 className="text-4xl mb-4 sm:text-6xl">
           Hacker news!
         </h1>
       </div>
@@ -33,7 +34,7 @@ const Home = async () => {
         <ArticlesList articles={articles} />
       </div>
       <div>
-        <button>More news</button>
+        <ButtonMoreArticles />
       </div>
     </main>
   );

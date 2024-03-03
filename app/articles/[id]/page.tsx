@@ -1,26 +1,37 @@
 import { IDynamicArticleParams } from "@/interfaces";
-
-const getArticle = async (id: any) => {
-  const response = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`);
-  const article = await response.json();
-  return article;
-};
+import toFormatDate from "@/utils/toFormatDate";
+import Link from "next/link";
+import getItem from "@/utils/getItem";
+import Comment from "@/components/comment";
 
 const DynamicArticle = async ({ params: { id } }: IDynamicArticleParams) => {
-  const article = await getArticle(id);
+  const article = await getItem(id);
 
   return (
-    <div key={article.id}>
-        <a href={article.url}>{article.url}</a>
-        <h2>{article.title}</h2>
+    <main className="flex min-h-screen items-center flex-col justify-between p-6 sm:px-24 sm:py-12">
+      <div key={article.id} className="flex flex-col gap-4">
+        <Link
+          href="/"
+          className="hover:cursor-pointer text-4xl mb-4 sm:text-6xl self-center"
+        >
+          Hacker news!
+        </Link>
+        <h2 className="border-b-2 self-center border-emerald-800 text-xl sm:text-2xl">{article.title}</h2>
+        <a href={article.url} className="active:text-emerald-500 hover:text-emerald-500 hover:coursor-pointer">{article.url}</a>
         <p>{article.text}</p>
-        <p>{article.time}</p>
-        <p>{article.by}</p>
-        <p>{article.descendants}</p>
-        <p>{article.kids}</p>
+        <div className="flex justify-between">
+          <p>{toFormatDate(article.time)}</p>
+          <p>by {article.by}</p>
+        </div>
+        <div className="flex flex-col gap-6 mt-4">
+          <p>Comments: {article.descendants}</p>
+          {!article.kids ? null : article.kids.map((id: string) => {
+            return (<Comment key={id} id={id} />)
+          })}</div>
+      </div>
 
-    </div>
-);
+    </main>
+  );
 };
 
 export default DynamicArticle;
