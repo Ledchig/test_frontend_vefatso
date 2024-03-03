@@ -7,9 +7,7 @@ const getArticle = async (id: any) => {
 };
 
 const DynamicArticle = async ({ params: { id } }: IDynamicArticleParams) => {
-  console.log(id);
   const article = await getArticle(id);
-  console.log(article);
 
   return (
     <div key={article.id}>
